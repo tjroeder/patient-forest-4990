@@ -42,9 +42,19 @@ RSpec.describe '/movies/show.html.erb' do
 
       it 'should display the actors average age for the movie' do
         visit "/movies/#{movie_1.id}"
-
+        
         expected = "Average Actor Age: #{movie_1.average_actor_age}"
         expect(page).to have_content(expected)
+      end
+    end
+    
+    describe 'when they fill in add actor form' do
+      it 'should add a already created actor to the movie' do
+        visit "/movies/#{movie_1.id}"
+        fill_in :name, with: 'Gwyneth Paltrow'
+        click_button 'Save'
+
+        expect(page).to have_content(actor_3.name)
       end
     end
   end
