@@ -4,6 +4,8 @@ class CreateArtist < ActiveRecord::Migration[5.2]
       t.string :name
       t.integer :age
       t.references :movies_songs, foreign_key: true
+
+      t.timestamps
     end
   end
 end
