@@ -6,8 +6,8 @@ RSpec.describe '/studio/index.html.erb' do
   let!(:studio_3) { Studio.create!(name: 'Sony Studios', location: 'Culver City') }
   
   let!(:movie_1) { studio_1.movies.create!(title: 'Raiders of the Lost Ark', creation_year: 1981, genre: 'Action/Adventure') }
-  let!(:movie_2) { studio_1.movies.create!(title: 'Iron Man', creation_year: 2008, genre: 'Superhero') }
-  let!(:movie_3) { studio_1.movies.create!(title: 'Wall-e', creation_year: 2007, genre: 'Animated') }
+  let!(:movie_2) { studio_2.movies.create!(title: 'Iron Man', creation_year: 2008, genre: 'Superhero') }
+  let!(:movie_3) { studio_2.movies.create!(title: 'Wall-e', creation_year: 2007, genre: 'Animated') }
 
   describe 'as a user' do
     describe 'when they visit the page' do
@@ -37,7 +37,20 @@ RSpec.describe '/studio/index.html.erb' do
       end
 
       it 'displays the studios movie titles beneath the movies' do
+        visit '/studios'
 
+        within("#studio-#{studio_2.id}") do
+          within("#movie-#{movie_2.id}") do
+            expect(page).to have_content(movie_2.title)
+            expect(page).to have_content(movie_2.creation_year)
+            expect(page).to have_content(movie_2.genre)
+          end
+          within("#movie-#{movie_3.id}") do
+            expect(page).to have_content(movie_3.title)
+            expect(page).to have_content(movie_3.creation_year)
+            expect(page).to have_content(movie_3.genre)
+          end
+        end
       end
     end
   end
